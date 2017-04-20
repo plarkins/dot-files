@@ -1,0 +1,21 @@
+#!/bin/bash
+
+setup_link() {
+  local file="$1"
+  local target="$(dirname $0)/${file:?}"
+  if [[ -e "${HOME:?}/${file:?}" ]]; then 
+    echo -n "Replace ${file:?}? (Y/n) "
+    read answer
+    case "${answer?}" in
+      Y)
+        echo "Replacing with ${target:?}"
+        rm "${HOME:?}/${file:?}" || exit
+        ;;
+      *)
+        return
+    esac
+  fi
+  ln --symbolic "${target:?}" "${HOME:?}" 
+}
+
+setup_link ".vimrc" || exit   
