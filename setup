@@ -19,5 +19,6 @@ setup_link() {
   ln --symbolic "${target:?}" "${HOME:?}" 
 }
 
+setup_link ".tmux.conf" || exit
 setup_link ".vimrc" || exit   
 setup_link ".zshrc" || exit   
