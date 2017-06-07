@@ -3,6 +3,12 @@ precmd() {
   RPROMPT="%~ ${KEYMAP}"
 }
 
+autoload -Uz compinit && compinit
+
+# Configure completion
+eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
+
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt hist_no_functions
