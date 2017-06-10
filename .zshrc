@@ -1,13 +1,39 @@
 precmd() {
-  PROMPT=$'\n%# '
-  RPROMPT="%~ ${KEYMAP}"
+  vcs_info
 }
 
+vim_mode() {
+  if [[ "${KEYMAP}" == "main" || "${KEYMAP}" == "viins" ]]; then
+    echo "${bg[blue]}INSERT${reset_color}"
+  elif [[ "${KEYMAP}" == "vicmd" ]]; then
+    echo "${bg[yellow]}NORMAL${reset_color}"
+  fi
+}
+
+#function zle-line-init zle-keymap-select {
+#  zle .reset-prompt
+#}
+
+autoload -Uz colors && colors
 autoload -Uz compinit && compinit
+autoload -Uz tetriscurses && alias tetris=tetriscurses
+autoload -Uz vcs_info
+#autoload -Uz zstyle+
+# run-help?
 
 # Configure completion
 eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
+
+# Configure version control info
+zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+zstyle ':vcs_info:*' enable git hg p4
+
+# Configure ZLE
+#zle -N zle-line-init
+#zle -N zle-keymap-select
 
 # Completion options
 setopt glob_complete
@@ -31,6 +57,12 @@ setopt correct
 setopt correct_all
 setopt interactive_comments
 setopt print_exit_value
+
+# Prompt options
+setopt prompt_subst
+setopt transient_rprompt
+export PROMPT=$'\n%# '
+export RPROMPT='%~ ${vcs_info_msg_0_} $(vim_mode)'
 
 # Start with Vim keybindings (insert mode)
 bindkey -v
