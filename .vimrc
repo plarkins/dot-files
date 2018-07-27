@@ -1,5 +1,11 @@
 set nocompatible
 
+" Load site-specific configuration it's not OK to upload to Github.
+let s:private_rc = $HOME . '/.vimrc-private'
+if filereadable(s:private_rc)
+  exec 'source' s:private_rc
+endif
+
 filetype on
 filetype indent on
 filetype plugin on

@@ -72,3 +72,8 @@ export KEYTIMEOUT=1 # In zsh, switch between normal and insert mode in 0.1s
 
 alias grep='grep --color=auto'
 alias ls='ls --classify --color=auto --human-readable'
+
+# Load site-specific configuration not appropriate for Github
+if [[ -f "${HOME}/.zshrc-private" ]]; then
+  source "${HOME}/.zshrc-private"
+fi
