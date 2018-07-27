@@ -19,8 +19,8 @@ set laststatus=2
 set mouse=a
 set ruler
 set shiftwidth=2
-set t_Co=256
 set tabstop=2
+set termguicolors
 set ttyfast
 set ttymouse=xterm2
 set wildmenu
@@ -45,3 +45,8 @@ cnoremap <C-n> <Down>
 
 " Expand %% to the current buffer's path in command mode.
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
+highlight Comment cterm=italic
+" Need to use GUI config for true color terminals
+" highlight Pmenu guifg=black
+" highlight PmenuSel guifg=black
